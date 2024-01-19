@@ -1,0 +1,6 @@
+<div>
+    <canvasjs-chart [options]="cpuChartOptions" (chartInstance)="getChartInstance($event)" [styles]="{width: '50%', height: '300px', 'float': 'left' }"></canvasjs-chart>
+	<canvasjs-chart [options]="memoryChartOptions" (chartInstance)="getChartInstance($event)" [styles]="{width: '50%', height: '300px', 'float': 'left'}"></canvasjs-chart>
+	<canvasjs-chart [options]="networkChartOptions" (chartInstance)="getChartInstance($event)" [styles]="{width: '50%', height: '300px', 'float': 'left'}"></canvasjs-chart>
+	<canvasjs-chart [options]="diskChartOptions" (chartInstance)="getChartInstance($event)" [styles]="{width: '50%', height: '300px', 'float': 'left'}"></canvasjs-chart>	
+</div>                        

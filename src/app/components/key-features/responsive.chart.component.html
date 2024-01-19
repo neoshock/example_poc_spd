@@ -1,0 +1,10 @@
+<div>
+	<div class="btn-group">
+		<button class="btn btn-outline-success" (click)="this.resizeChart($event, 25)">Small</button>
+		<button class="btn btn-outline-success" (click)="this.resizeChart($event, 50)">Medium</button>
+		<button class="btn btn-success" (click)="this.resizeChart($event, 100)">Large</button>
+	</div>
+	
+	<canvasjs-chart [options]="chartOptions" [styles]="{width: width, height:'360px'}" (chartInstance)="getChartInstance($event)"></canvasjs-chart>
+	
+</div>

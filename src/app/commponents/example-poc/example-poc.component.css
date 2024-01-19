@@ -1,0 +1,82 @@
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.indicator-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}	
+
+.indicator {
+    width: calc(33% - 20px);
+    /* Ajustar para el espaciado */
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.indicator-title {
+    font-size: 15px;
+    /* Ajustar el tamaño de la fuente según sus necesidades */
+    margin-bottom: 3px;
+}
+
+.indicator-value {
+    font-size: 36px;
+    font-weight: bold;
+    /* Ajustar el tamaño de la fuente según sus necesidades */
+}
+
+
+.dashboard-header {
+    padding: 10px;
+    background-color: #f2f2f2;
+    /* O el color que prefieras */
+    text-align: center;
+    font-size: 24px;
+    /* Ajusta el tamaño de la fuente según tus necesidades */
+    box-shadow: 0 2px 4px rgba(1, 0, 0, 0.1);
+}
+
+.content-container {
+    width: 100%;
+    flex-grow: 1;
+    overflow: auto;
+    /* Para el desplazamiento si los gráficos son demasiado grandes */
+}
+
+.row {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.chart-container {
+    width: calc(33% - 20px);
+
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.half-width {
+    width: calc(50% - 20px);
+    /* Ajustar para el espaciado */
+}
+
+.full-width {
+    width: 100%;
+}

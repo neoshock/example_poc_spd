@@ -1,0 +1,49 @@
+<div class="dashboard-container">
+    <header class="dashboard-header">
+        POC SDP - Reportes de Avisos
+    </header>
+    <div class="content-container">
+        <div class="row">
+            <!-- Indicator container -->
+            <div class="indicator-container">
+                <div class="indicator">
+                    <div class="indicator-title">LIQUIDEZ</div>
+                    <div class="indicator-value">1.39</div>
+                    <canvasjs-chart [options]="indicatorOptionOne" [styles]="{width: '300px', height:'100px'}"></canvasjs-chart>
+                </div>
+                <div class="indicator">
+                    <div class="indicator-title">COBERTURA PRIMAS VENCIDAS TOTAL</div>
+                    <div class="indicator-value">12.55%</div>
+                    <canvasjs-chart [options]="indicatorOptionTwo" [styles]="{width: '300px', height:'100px'}"></canvasjs-chart>
+                </div>
+                <div class="indicator">
+                    <div class="indicator-title">TASA DE UTILIDAD TECNICA</div>
+                    <div class="indicator-value">-7.98%</div>
+                    <canvasjs-chart [options]="indicatorOptionThree" [styles]="{width: '300px', height:'100px'}"></canvasjs-chart>
+                </div>
+                <div class="indicator">
+                    <div class="indicator-title">COBERTURA PRIMAS VENCIDAS TOTAL</div>
+                    <div class="indicator-value">130</div>
+                    <canvasjs-chart [options]="indicatorOptionOne" [styles]="{width: '300px', height:'100px'}"></canvasjs-chart>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="chart-container half-width">
+                <canvasjs-chart [options]="chartOptions1" [styles]="{width: '100%', height:'200px'}"
+                    (chartInstance)="getChart1Instance($event)"></canvasjs-chart>
+            </div>
+            <div class="chart-container half-width">
+                <canvasjs-chart [options]="chartOptions2" [styles]="{width: '100%', height:'200px'}"
+                    (chartInstance)="getChart2Instance($event)"></canvasjs-chart>
+            </div>
+        </div>
+        <div class="row">
+            <div class="chart-container full-width">
+                <canvasjs-chart [options]="chartOptions3" [styles]="{width: '100%', height:'200px'}"
+                    (chartInstance)="getChart3Instance($event)"></canvasjs-chart>
+            </div>
+        </div>
+    </div>
+
+</div>
