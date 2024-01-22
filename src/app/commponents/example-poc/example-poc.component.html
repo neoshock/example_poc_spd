@@ -7,24 +7,28 @@
             <!-- Indicator container -->
             <div class="indicator-container">
                 <div class="indicator">
-                    <div class="indicator-title">LIQUIDEZ</div>
-                    <div class="indicator-value">1.39</div>
-                    <canvasjs-chart [options]="indicatorOptionOne" [styles]="{width: '300px', height:'100px'}"></canvasjs-chart>
+                    <div class="indicator-title">Número de casos</div>
+                    <div class="indicator-value">{{totalCasesNumber}}</div>
+                    <canvasjs-chart [options]="totalCases" [styles]="{width: '300px', height:'100px'}"
+                        (chartInstance)="getChartInstanceForTotalCases($event)"></canvasjs-chart>
                 </div>
                 <div class="indicator">
-                    <div class="indicator-title">COBERTURA PRIMAS VENCIDAS TOTAL</div>
-                    <div class="indicator-value">12.55%</div>
-                    <canvasjs-chart [options]="indicatorOptionTwo" [styles]="{width: '300px', height:'100px'}"></canvasjs-chart>
+                    <div class="indicator-title">Total en pagos</div>
+                    <div class="indicator-value">${{totalPaymentNumber}}</div>
+                    <canvasjs-chart [options]="totalPayment" [styles]="{width: '300px', height:'100px'}"
+                        (chartInstance)="getChartInstanceForTotalPayment($event)"></canvasjs-chart>
                 </div>
                 <div class="indicator">
-                    <div class="indicator-title">TASA DE UTILIDAD TECNICA</div>
-                    <div class="indicator-value">-7.98%</div>
-                    <canvasjs-chart [options]="indicatorOptionThree" [styles]="{width: '300px', height:'100px'}"></canvasjs-chart>
+                    <div class="indicator-title">Número de casos liquidados</div>
+                    <div class="indicator-value">{{liquidatedCasesNumber}}</div>
+                    <canvasjs-chart [options]="liquidatedCases" [styles]="{width: '300px', height:'100px'}"
+                        (chartInstance)="getChartInstanceForLiquidatedCases($event)"></canvasjs-chart>
                 </div>
                 <div class="indicator">
-                    <div class="indicator-title">COBERTURA PRIMAS VENCIDAS TOTAL</div>
-                    <div class="indicator-value">130</div>
-                    <canvasjs-chart [options]="indicatorOptionOne" [styles]="{width: '300px', height:'100px'}"></canvasjs-chart>
+                    <div class="indicator-title">Valor en reserva</div>
+                    <div class="indicator-value">${{amountInReserveNumber}}</div>
+                    <canvasjs-chart [options]="amountInReserve" [styles]="{width: '300px', height:'100px'}"
+                        (chartInstance)="getChartInstanceForAmountInReserve($event)"></canvasjs-chart>
                 </div>
             </div>
         </div>
@@ -39,9 +43,13 @@
             </div>
         </div>
         <div class="row">
-            <div class="chart-container full-width">
+            <div class="chart-container half-width">
                 <canvasjs-chart [options]="chartOptions3" [styles]="{width: '100%', height:'200px'}"
                     (chartInstance)="getChart3Instance($event)"></canvasjs-chart>
+            </div>
+            <div class="chart-container half-width">
+                <canvasjs-chart [options]="totalCasesByPeriod" [styles]="{width: '100%', height:'200px'}"
+                    (chartInstance)="getChartInstanceForTotalCasesByPeriod($event)"></canvasjs-chart>
             </div>
         </div>
     </div>
