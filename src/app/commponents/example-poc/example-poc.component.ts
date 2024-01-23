@@ -488,7 +488,7 @@ export class ExamplePocComponent implements OnInit {
 
     const dataPoints = Object.entries(dataByEstado).map(([estado, count]) => {
       const percentage = (((count as number) / totalCases) * 100).toFixed(2); // Calcula el porcentaje
-      return { label: estado, y: count, indexLabel: `${percentage}%` };
+      return { label: estado, y: count, indexLabel: estado, toolTipContent: `${estado}: {y} (${percentage}%)` };
     });
 
     this.chartOptions2 = {
