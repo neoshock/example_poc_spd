@@ -109,6 +109,7 @@
         </div>
         <div class="grid grid-rows-2 grid-flow-col gap-2 col-span-5">
             <div class="rounded-lg overflow-hidden shadow-lg">
+
                 <canvasjs-chart [options]="chartOptions1" [styles]="{width: '100%', height:'240px', padding: '1px'}"
                     (chartInstance)="getChart1Instance($event)"></canvasjs-chart>
             </div>
@@ -116,11 +117,14 @@
                 <canvasjs-chart [options]="chartOptions3" [styles]="{width: '100%', height:'240px'}"
                     (chartInstance)="getChart3Instance($event)"></canvasjs-chart>
             </div>
-            <div class="rounded-lg overflow-hidden shadow-lg">
+            <div class="relative rounded-lg overflow-hidden shadow-lg">
                 <canvasjs-chart [options]="chartOptions2" [styles]="{width: '100%', height:'240px'}"
                     (chartInstance)="getChart2Instance($event)"></canvasjs-chart>
+                <button *ngIf="showDrilldown" (click)="backToMainChart()"
+                    class="absolute top-2 right-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
+                    Regresar
+                </button>
             </div>
-
             <div class="rounded-lg overflow-hidden shadow-lg">
                 <canvasjs-chart [options]="totalCasesByPeriod" [styles]="{width: '100%', height:'240px'}"
                     (chartInstance)="getChartInstanceForTotalCasesByPeriod($event)"></canvasjs-chart>

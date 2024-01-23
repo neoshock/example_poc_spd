@@ -51,8 +51,31 @@ export class ExamplePocComponent implements OnInit {
   isDropdownOpen: boolean = false;
   isDropdownOpen2: boolean = false;
 
+  // profundidad
+  drilldownDataEstados: any = {};
+  chartDataEstado: any = {};
+  drilldownLevel: number = 0;
+  showDrilldown: boolean = false;
+
   constructor(private http: HttpClient) {
 
+  }
+
+  prepareDrilldownData(): void {
+    this.jsonData.forEach(item => {
+      const estado = item['Estado Aviso'];
+      const ramo = item.Ramo;
+
+      if (!this.drilldownDataEstados[estado]) {
+        this.drilldownDataEstados[estado] = {};
+      }
+
+      if (!this.drilldownDataEstados[estado][ramo]) {
+        this.drilldownDataEstados[estado][ramo] = 0;
+      }
+
+      this.drilldownDataEstados[estado][ramo]++;
+    });
   }
 
   toggleDropdown(): void {
@@ -102,6 +125,9 @@ export class ExamplePocComponent implements OnInit {
       this.prepareDataForAmountInReserve();
 
       this.prepareDataForTotalCasesByPeriod();
+
+      this.prepareDrilldownData(); // Llama a este método después de cargar los datos
+
     });
   }
 
@@ -511,6 +537,144 @@ export class ExamplePocComponent implements OnInit {
     if (this.chart2) {
       this.chart2.options = this.chartOptions2;
       this.chart2.render();
+    }
+
+    this.chartOptions2.data[0].click = (e: any) => {
+      this.showDrilldownChart(e.dataPoint.label);
+    };
+  }
+
+  showDrilldownChart(estado: string): void {
+    // Asegúrate de que existan datos para el estado seleccionado
+    if (!this.drilldownDataEstados[estado]) {
+      console.error(`No se encontraron datos para el estado: ${estado}`);
+      return;
+    }
+
+    const dataPoints = Object.keys(this.drilldownDataEstados[estado]).map(ramo => {
+      return { label: ramo, y: this.drilldownDataEstados[estado][ramo] };
+    });
+
+    this.chartDataEstado = {
+      animationEnabled: true,
+      theme: "light2",
+      title: {
+        text: `Cantidad de Casos por Ramo (${estado})`
+      },
+      axisY: {
+        title: "Cantidad de Casos",
+        includeZero: true,
+        logarithmic: true,
+      },
+      axisX: {
+        title: "Ramo",
+        interval: 1,
+      },
+      data: [{
+        type: "column",
+        dataPoints: dataPoints,
+        indexLabel: "{y}" // Muestra la cantidad de casos en la barra
+      }]
+    };
+
+    if (this.chart2) {
+      this.showDrilldown = true;
+      this.drilldownLevel = 1;
+      this.chart2.options = this.chartDataEstado;
+      this.chart2.render();
+    }
+
+    this.chartDataEstado.data[0].click = (e: any) => {
+      this.showBrokerChart(e.dataPoint.label, estado);
+    };
+  }
+
+  showBrokerChart(ramo: string, estado: string): void {
+    // Aquí debes preparar tus datos para los top 10 brokers de ese ramo y estado
+    // Por ejemplo:
+    const brokerData = this.prepareBrokerData(ramo, estado);
+
+    const dataPoints = brokerData.map((broker: any) => {
+      return { label: broker.name, y: broker.count };
+    });
+
+    const chartDataBroker = {
+      animationEnabled: true,
+      theme: "light2",
+      title: {
+        text: `Top 10 Brokers en ${ramo} (${estado})`
+      },
+      axisX: {
+        title: "Broker",
+        interval: 1,
+        reversed: true, // Para barras horizontales
+      },
+      axisY: {
+        title: "Cantidad de Casos",
+        includeZero: true,
+        logarithmic: true,
+      },
+      data: [{
+        type: "bar", // Para barras horizontales
+        dataPoints: dataPoints
+      }]
+    };
+
+    if (this.chart2) {
+      this.showDrilldown = true;
+      this.drilldownLevel = 2;
+      this.chart2.options = chartDataBroker;
+      this.chart2.render();
+    }
+  }
+
+  prepareBrokerData(ramo: string, estado: string) {
+    // Agrupar los casos por broker
+    const casesByBroker = this.jsonData.reduce((acc, item) => {
+      if (item.Ramo === ramo && item['Estado Aviso'] === estado) {
+        const broker = item.Broker;
+        if (broker) {
+          acc[broker] = (acc[broker] || 0) + 1; // Incrementar el contador para cada broker
+        }
+      }
+      return acc;
+    }, {});
+
+    // Convertir el objeto en un array, ordenarlo por la cantidad de casos y tomar el TOP 10
+    const sortedBrokers = Object.entries(casesByBroker)
+      .map(([broker, count]) => ({
+        name: getInitials(broker), // Obtener las iniciales si el nombre es muy largo
+        count: count,
+        y: count,
+        indexLabel: "{y}", // Muestra la cantidad de casos en la barra
+      }))
+      .sort((a: any, b: any) => b.count - a.count)
+      .slice(0, 10); // Tomar solo los primeros 10
+
+    // Función para obtener las iniciales de un nombre
+    function getInitials(name: string) {
+      return name.split(' ')
+        .map(word => word.charAt(0))
+        .join('');
+    }
+
+
+
+    return sortedBrokers;
+  }
+
+
+  backToMainChart(): void {
+    if (this.chart2) {
+      // validar el nivel de profundidad
+      if (this.drilldownLevel === 1) {
+        this.showDrilldown = false;
+        this.drilldownLevel = 0;
+        this.chart2.options = this.chartOptions2;
+        this.chart2.render();
+      } else if (this.drilldownLevel === 2) {
+        this.showDrilldownChart(this.chartDataEstado.title.text.split('(')[1].split(')')[0]);
+      }
     }
   }
 
