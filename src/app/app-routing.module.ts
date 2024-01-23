@@ -88,6 +88,8 @@ import { StockChartNumericAxisComponent } from './components/stockchart/stockcha
 import { StockChartDateTimeAxisComponent } from './components/stockchart/stockchart.datetime.axis';
 import { StockChartRangeSelectorNavigatorComponent } from './components/stockchart/stockchart.rangeselector.navigator';
 import { ExamplePocComponent } from './commponents/example-poc/example-poc.component';
+import { StateCasesComponent } from './commponents/state-cases/state-cases.component';
+import { EjecutivosCasesComponent } from './commponents/ejecutivos-cases/ejecutivos-cases.component';
 
 const routes: Routes = [
   { path: '', component: IndexlabelChartComponent, pathMatch: "full" },
@@ -178,6 +180,9 @@ const routes: Routes = [
   { path: 'stockchart-datetime-axis', component: StockChartDateTimeAxisComponent, title: "Angular StockChart with Date-Time Axis" },
   { path: 'stockchart-rangeselector-navigator', component: StockChartRangeSelectorNavigatorComponent, title: "Angular StockChart with Range Selector & Navigator" },
   { path: 'example_poc', component: ExamplePocComponent, title: "POC SDP" },
+  { path: 'state_cases', component: StateCasesComponent, title: "POC SDP" },
+  { path: 'ejecutivos_cases', component: EjecutivosCasesComponent, title: "POC SDP" },
+
 
   { path: '**', component: NotFoundComponent, title: "404 Not Found" }
 
