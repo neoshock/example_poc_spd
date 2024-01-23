@@ -1,54 +1,128 @@
-<div class="dashboard-container">
-    <header class="dashboard-header">
-        POC SDP - Reportes de Avisos
-    </header>
-    <div class="content-container">
-        <div class="row">
-            <!-- Indicator container -->
-            <div class="indicator-container">
-                <div class="indicator">
-                    <div class="indicator-title">Número de casos</div>
-                    <div class="indicator-value">{{totalCasesNumber}}</div>
-                    <canvasjs-chart [options]="totalCases" [styles]="{width: '300px', height:'100px'}"
-                        (chartInstance)="getChartInstanceForTotalCases($event)"></canvasjs-chart>
-                </div>
-                <div class="indicator">
-                    <div class="indicator-title">Total en pagos</div>
-                    <div class="indicator-value">${{totalPaymentNumber}}</div>
-                    <canvasjs-chart [options]="totalPayment" [styles]="{width: '300px', height:'100px'}"
-                        (chartInstance)="getChartInstanceForTotalPayment($event)"></canvasjs-chart>
-                </div>
-                <div class="indicator">
-                    <div class="indicator-title">Número de casos liquidados</div>
-                    <div class="indicator-value">{{liquidatedCasesNumber}}</div>
-                    <canvasjs-chart [options]="liquidatedCases" [styles]="{width: '300px', height:'100px'}"
-                        (chartInstance)="getChartInstanceForLiquidatedCases($event)"></canvasjs-chart>
-                </div>
-                <div class="indicator">
-                    <div class="indicator-title">Valor en reserva</div>
-                    <div class="indicator-value">${{amountInReserveNumber}}</div>
-                    <canvasjs-chart [options]="amountInReserve" [styles]="{width: '300px', height:'100px'}"
-                        (chartInstance)="getChartInstanceForAmountInReserve($event)"></canvasjs-chart>
+<header class="bg-dark">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between p-2 lg:px-8" aria-label="Global">
+        <div class="flex lg:flex-1">
+            <h2 class="text-white">
+                POC SDP
+            </h2>
+        </div>
+        <div class="relative mr-3">
+            <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg 
+                    text-sm px-3 py-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" (click)="toggleDropdown()">Periodo<svg
+                    class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 1 4 4 4-4" />
+                </svg>
+            </button>
+
+            <!-- Dropdown menu -->
+            <div id="dropdownHover" *ngIf="isDropdownOpen"
+                class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div class="py-1" role="none">
+                    <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                        id="menu-item-0">2024</a>
+                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                        id="menu-item-1">2023</a>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="chart-container half-width">
-                <canvasjs-chart [options]="chartOptions1" [styles]="{width: '100%', height:'200px'}"
+
+        <div class="relative mr-3">
+            <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium 
+                    rounded-lg text-sm px-3 py-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" (click)="toggleDropdown2()">Mes<svg
+                    class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 10 6">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 1 4 4 4-4" />
+                </svg>
+            </button>
+
+            <!-- Dropdown menu -->
+            <div id="dropdownHover" *ngIf="isDropdownOpen2"
+                class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div class="py-1" role="none">
+                    <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                        id="menu-item-0">Enero</a>
+                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                        id="menu-item-1">Febrero</a>
+                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                        id="menu-item-2">Marzo</a>
+                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                        id="menu-item-3">Abril</a>
+                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                        id="menu-item-4">Mayo</a>
+                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                        id="menu-item-5">Junio</a>
+                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                        id="menu-item-6">Julio</a>
+                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                        id="menu-item-7">Agosto</a>
+                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                        id="menu-item-8">Septiembre</a>
+                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                        id="menu-item-9">Octubre</a>
+                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                        id="menu-item-10">Noviembre</a>
+                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                        id="menu-item-11">Diciembre</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="container p-1">
+    <div class="grid grid-cols-6">
+        <div class="grid grid-rows-1 grid-flow-col gap-4 col-span-1 mr-3 row-span-3">
+            <div class="max-w-sm rounded-lg overflow-hidden shadow-lg p-2">
+
+            </div>
+        </div>
+        <div class="grid grid-rows-1 grid-flow-col gap-4 col-span-5 mb-3">
+            <div class="max-w-sm rounded-lg overflow-hidden shadow-lg p-2">
+                <div class="text-sm text-center">Número de casos</div>
+                <div class="text-2xl text-center font-bold">{{totalCasesNumber}}</div>
+                <canvasjs-chart [options]="totalCases" [styles]="{height:'60px'}"
+                    (chartInstance)="getChartInstanceForTotalCases($event)"></canvasjs-chart>
+            </div>
+            <div class="max-w-sm rounded-lg overflow-hidden shadow-lg p-2">
+                <div class="text-sm text-center">Total en pagos</div>
+                <div class="text-2xl text-center font-bold">${{totalPaymentNumber | number}}</div>
+                <canvasjs-chart [options]="totalPayment" [styles]="{height:'60px'}"
+                    (chartInstance)="getChartInstanceForTotalPayment($event)"></canvasjs-chart>
+            </div>
+            <div class="max-w-sm rounded-lg overflow-hidden shadow-lg p-2">
+                <div class="text-sm text-center">Número de casos liquidados</div>
+                <div class="text-2xl text-center font-bold">{{liquidatedCasesNumber}}</div>
+                <canvasjs-chart [options]="liquidatedCases" [styles]="{ height:'60px'}"
+                    (chartInstance)="getChartInstanceForLiquidatedCases($event)"></canvasjs-chart>
+            </div>
+            <div class="max-w-sm rounded-lg overflow-hidden shadow-lg p-2">
+                <div class="text-sm text-center">Valor en reserva</div>
+                <div class="text-2xl text-center font-bold">${{amountInReserveNumber | number}}</div>
+                <canvasjs-chart [options]="amountInReserve" [styles]="{ height:'60px'}"
+                    (chartInstance)="getChartInstanceForAmountInReserve($event)"></canvasjs-chart>
+            </div>
+        </div>
+        <div class="grid grid-rows-2 grid-flow-col gap-2 col-span-5">
+            <div class="rounded-lg overflow-hidden shadow-lg">
+                <canvasjs-chart [options]="chartOptions1" [styles]="{width: '100%', height:'240px', padding: '1px'}"
                     (chartInstance)="getChart1Instance($event)"></canvasjs-chart>
             </div>
-            <div class="chart-container half-width">
-                <canvasjs-chart [options]="chartOptions2" [styles]="{width: '100%', height:'200px'}"
-                    (chartInstance)="getChart2Instance($event)"></canvasjs-chart>
-            </div>
-        </div>
-        <div class="row">
-            <div class="chart-container half-width">
-                <canvasjs-chart [options]="chartOptions3" [styles]="{width: '100%', height:'200px'}"
+            <div class="rounded-lg overflow-hidden shadow-lg">
+                <canvasjs-chart [options]="chartOptions3" [styles]="{width: '100%', height:'240px'}"
                     (chartInstance)="getChart3Instance($event)"></canvasjs-chart>
             </div>
-            <div class="chart-container half-width">
-                <canvasjs-chart [options]="totalCasesByPeriod" [styles]="{width: '100%', height:'200px'}"
+            <div class="rounded-lg overflow-hidden shadow-lg">
+                <canvasjs-chart [options]="chartOptions2" [styles]="{width: '100%', height:'240px'}"
+                    (chartInstance)="getChart2Instance($event)"></canvasjs-chart>
+            </div>
+
+            <div class="rounded-lg overflow-hidden shadow-lg">
+                <canvasjs-chart [options]="totalCasesByPeriod" [styles]="{width: '100%', height:'240px'}"
                     (chartInstance)="getChartInstanceForTotalCasesByPeriod($event)"></canvasjs-chart>
             </div>
         </div>

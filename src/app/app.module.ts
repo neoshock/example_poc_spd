@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 import { CanvasJSAngularStockChartsModule } from '@canvasjs/angular-stockcharts';
 import { AppComponent } from './app.component';
@@ -96,6 +98,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ExamplePocComponent } from './commponents/example-poc/example-poc.component';
 import { FormsModule } from '@angular/forms';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -185,15 +188,17 @@ import { FormsModule } from '@angular/forms';
     StockChartRangeSelectorNavigatorComponent,
 
     NotFoundComponent,
-    ExamplePocComponent,
+
+    ExamplePocComponent
+
 
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     CanvasJSAngularStockChartsModule,
-    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

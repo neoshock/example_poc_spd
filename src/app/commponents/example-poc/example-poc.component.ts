@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { PaymentData } from './payment_data.interface';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-example-poc',
   templateUrl: './example-poc.component.html',
-  styleUrls: ['./example-poc.component.css']
+  styleUrls: ['./example-poc.component.css'],
 })
 export class ExamplePocComponent implements OnInit {
 
@@ -47,8 +48,25 @@ export class ExamplePocComponent implements OnInit {
   totalCasesByPeriod: any;
   totalCasesByPeriodChart: any;
 
+  isDropdownOpen: boolean = false;
+  isDropdownOpen2: boolean = false;
+
   constructor(private http: HttpClient) {
 
+  }
+
+  toggleDropdown(): void {
+    this.isDropdownOpen = !this.isDropdownOpen;
+    if (this.isDropdownOpen2) {
+      this.isDropdownOpen2 = false;
+    }
+  }
+
+  toggleDropdown2(): void {
+    this.isDropdownOpen2 = !this.isDropdownOpen2;
+    if (this.isDropdownOpen) {
+      this.isDropdownOpen = false;
+    }
   }
 
   ngOnInit(): void {
@@ -130,7 +148,7 @@ export class ExamplePocComponent implements OnInit {
       },
       data: [{
         type: "spline",
-        xValueFormatString: "YYYY",
+        xValueFormatString: "DD/MM/YYYY",
         dataPoints: sortedDataPoints
       }]
     };
@@ -205,7 +223,7 @@ export class ExamplePocComponent implements OnInit {
       return acc;
     }, 0);
 
-    this.totalPaymentNumber = parseFloat(this.totalPaymentNumber.toFixed(2));
+    this.totalPaymentNumber = parseFloat(this.totalPaymentNumber.toFixed(0));
 
     if (this.totalPaymentChart) {
       this.totalPaymentChart.options = this.totalPayment;
@@ -260,8 +278,7 @@ export class ExamplePocComponent implements OnInit {
       },
       data: [{
         type: "spline",
-        xValueFormatString: "YYYY",
-        yValueFormatString: "#,###.##'$'",
+        xValueFormatString: "DD/MM/YYYY",
         dataPoints: sortedDataPoints
       }]
     };
@@ -283,7 +300,7 @@ export class ExamplePocComponent implements OnInit {
     }, 0);
 
     // Redondear a 2 decimales
-    this.amountInReserveNumber = parseFloat(this.amountInReserveNumber.toFixed(2));
+    this.amountInReserveNumber = parseFloat(this.amountInReserveNumber.toFixed(0));
 
     // Preparar datos para el gráfico
     const dataByFechaReserva = this.jsonData.reduce((acc, item) => {
@@ -328,8 +345,9 @@ export class ExamplePocComponent implements OnInit {
         tickColor: "white", // Establece el color de los ticks del eje Y en blanco para ocultarlos
       },
       data: [{
-
         type: "spline",
+        xValueFormatString: "DD/MM/YYYY",
+        yValueFormatString: "#,###.##'$'",
         dataPoints: sortedDataPoints
       }]
     };
@@ -341,52 +359,78 @@ export class ExamplePocComponent implements OnInit {
   }
 
   prepareDataForBarChart(): void {
-    // Contar casos por ramo
-    const dataByRamo = this.jsonData.reduce<{ [key: string]: number }>((acc, item) => {
-      if (item.Ramo) {
-        acc[item.Ramo] = (acc[item.Ramo] || 0) + 1; // Incrementa el contador para cada ramo
-      }
-      return acc;
-    }, {});
+    // Inicializar un objeto para almacenar los datos por ramo y estado
+    const dataByEstadoAndRamo: { [estado: string]: { [ramo: string]: number } } = {};
 
-    const dataPoints = Object.entries(dataByRamo).map(([ramo, count]) => {
-      return {
-        label: ramo, // Etiqueta vacía para ocultar texto del eje X
-        y: count, // Usa el contador como valor del eje Y
-        indexLabel: count.toString() // Muestra el contador como etiqueta sobre la columna
-      };
+    // Agrupar los casos por estado y ramo
+    this.jsonData.forEach(item => {
+      const ramo = item.Ramo;
+      const estado = item['Estado Aviso'];
+
+      // Inicializar el objeto para un estado si aún no existe
+      if (!dataByEstadoAndRamo[estado]) {
+        dataByEstadoAndRamo[estado] = {};
+      }
+
+      // Inicializar el contador para un ramo si aún no existe
+      if (!dataByEstadoAndRamo[estado][ramo]) {
+        dataByEstadoAndRamo[estado][ramo] = 0;
+      }
+
+      // Incrementar el contador para el estado y el ramo
+      dataByEstadoAndRamo[estado][ramo]++;
     });
 
+    // Convertir los datos en un formato adecuado para el gráfico de columnas apiladas
+    const dataSeries = Object.keys(dataByEstadoAndRamo).map(estado => {
+      const dataPoints = Object.keys(dataByEstadoAndRamo[estado]).map(ramo => {
+        return { label: ramo, y: dataByEstadoAndRamo[estado][ramo] };
+      });
+
+      return { type: "stackedColumn", name: estado, showInLegend: false, dataPoints };
+    });
+
+    let maxValue = 0;
+    dataSeries.forEach(series => {
+      series.dataPoints.forEach(point => {
+        if (point.y > maxValue) {
+          maxValue = point.y;
+        }
+      });
+    });
+
+    // Configurar las opciones del gráfico
     this.chartOptions1 = {
       animationEnabled: true,
       theme: "light2",
       title: {
-        text: "Cantidad de Casos por Ramo"
+        text: "Cantidad de Casos por Estado y Ramo"
       },
       axisY: {
         title: "Cantidad de Casos",
-        includeZero: true
+        includeZero: true,
+        logarithmic: true, // si quieres seguir utilizando una escala logarítmica
+        maximum: maxValue + 1000,
       },
       axisX: {
         title: "Ramo",
+        interval: 1,
         labelFormatter: function () {
-          return ""; // Función para ocultar las etiquetas del eje X
+          return ""; // Esto ocultará las etiquetas del eje X
         }
       },
-      data: [{
-        type: "column",
-        dataPoints: dataPoints,
-        indexLabelPlacement: "outside", // Coloca las etiquetas fuera de las columnas
-        indexLabelOrientation: "horizontal" // Orientación horizontal de las etiquetas
-      }]
+      toolTip: {
+        shared: true,
+      },
+      data: dataSeries
     };
 
+    // Renderizar el gráfico si la instancia ya existe
     if (this.chart1) {
       this.chart1.options = this.chartOptions1;
       this.chart1.render();
     }
   }
-
 
   getChartInstanceForAmountInReserve(chartInstance: any): void {
     this.amountInReserveChart = chartInstance;
@@ -440,8 +484,11 @@ export class ExamplePocComponent implements OnInit {
       return acc;
     }, {});
 
+    const totalCases = Object.values(dataByEstado).reduce((sum: any, num: any) => sum + num, 0) as number;
+
     const dataPoints = Object.entries(dataByEstado).map(([estado, count]) => {
-      return { label: estado, y: count };
+      const percentage = (((count as number) / totalCases) * 100).toFixed(2); // Calcula el porcentaje
+      return { label: estado, y: count, indexLabel: `${percentage}%` };
     });
 
     this.chartOptions2 = {
@@ -451,8 +498,12 @@ export class ExamplePocComponent implements OnInit {
         text: "Cantidad Estado Aviso"
       },
       data: [{
-        type: "pie",
-        innerRadius: "90%",
+
+        type: "doughnut",
+        radius: "100%", // Haz el gráfico más grande
+        innerRadius: "50%", // Haz el radio del "donut hole" más pequeño para que el gráfico sea más grande
+        indexLabelFontSize: 12, // Ajusta el tamaño de la fuente de la etiqueta según sea necesario
+        indexLabel: "{label}: {y} ({indexLabel})", // Muestra el porcentaje en la etiqueta
         dataPoints: dataPoints
       }]
     };
@@ -553,10 +604,11 @@ export class ExamplePocComponent implements OnInit {
       dataPoints.sort((a: any, b: any) => a.x - b.x);
 
       return {
-        type: "line",
+        type: "spline",
         name: ramo,
-        showInLegend: true,
+        showInLegend: false,
         dataPoints: dataPoints,
+        markerType: "none", // Ocultar los marcadores de los puntos de datos
       };
     });
 
@@ -569,10 +621,24 @@ export class ExamplePocComponent implements OnInit {
       },
       axisX: {
         title: "Periodo",
-        valueFormatString: "YYYY-MM",
+        valueFormatString: "DD/MM/YYYY",
+        interval: 1, // Ajusta según sea necesario para mejorar la distribución
+
       },
       axisY: {
+        logarithmic: true, // Cambia a verdadero para una escala logarítmica
         title: "Cantidad de Casos",
+        labelFontSize: 12, // Ajusta el tamaño de la fuente de las etiquetas del eje Y
+        stripLines: [
+          {
+            value: 50,
+            labelAlign: "near",
+            showOnTop: true,
+            color: "#d8d8d8",
+            labelFontSize: 14,
+            labelBackgroundColor: "white"
+          }
+        ],
       },
       toolTip: {
         shared: true,
