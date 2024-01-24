@@ -92,7 +92,7 @@ import { StateCasesComponent } from './commponents/state-cases/state-cases.compo
 import { EjecutivosCasesComponent } from './commponents/ejecutivos-cases/ejecutivos-cases.component';
 
 const routes: Routes = [
-  { path: '', component: IndexlabelChartComponent, pathMatch: "full" },
+  { path: '', component: ExamplePocComponent, pathMatch: "full" },
 
   { path: 'chart-index-data-label', component: IndexlabelChartComponent, title: "Angular Chart with Index Label" },
   { path: 'chart-zoom-pan', component: ZoomableChartComponent, title: "Angular Chart with Zooming & Panning" },

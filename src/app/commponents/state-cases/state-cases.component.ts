@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { PaymentData } from '../example-poc/payment_data.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-state-cases',
@@ -93,7 +94,7 @@ export class StateCasesComponent implements OnInit {
     }
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router:Router) {}
 
   ngOnInit(): void {
     this.loadData();
@@ -187,6 +188,9 @@ export class StateCasesComponent implements OnInit {
         this.prepareDataForTotalPayment();
         this.prepareDataForLiquidatedCases();
         this.prepareDataForLiquidatedCases2();
+
+        this.prepareDataForTotalCases();
+        this.prepareDataForAmountInReserve();
 
       });
   }
@@ -732,6 +736,156 @@ const dataPoints = sortedResults.map(([ramo, normalizedValue]) => {
       this.liquidatedCasesChart2.options = this.liquidatedCases2;
       this.liquidatedCasesChart2.render();
     }
+  }
+
+
+
+  getChartInstanceForAmountInReserve(chartInstance: any): void {
+    this.amountInReserveChart = chartInstance;
+    this.prepareDataForAmountInReserve(); // Llamar a esto después de obtener la instancia
+  }
+
+  prepareDataForAmountInReserve(): void {
+    // Calcular el total en reserva para todos los casos
+    this.amountInReserveNumber = this.jsonData.reduce((acc, item) => {
+      const valorReserva = parseFloat(item[' Valor Reserva ']);
+      if (!isNaN(valorReserva)) { // Asegurar que valorReserva sea un número válido
+        return acc + valorReserva;
+      }
+      return acc;
+    }, 0);
+
+    // Redondear a 2 decimales
+    this.amountInReserveNumber = parseFloat(this.amountInReserveNumber.toFixed(0));
+
+    // Preparar datos para el gráfico
+    const dataByFechaReserva = this.jsonData.reduce((acc, item) => {
+      const fechaParts = item['Fecha de Aviso'].split("/");
+      if (fechaParts.length === 3) {
+        const fecha = new Date(`${fechaParts[1]}/${fechaParts[0]}/${fechaParts[2]}`);
+        const fechaKey = fecha.toISOString().split('T')[0];
+        const valorReserva = parseFloat(item[' Valor Reserva ']);
+        if (!isNaN(valorReserva)) {
+          acc[fechaKey] = (acc[fechaKey] || 0) + valorReserva;
+        }
+      }
+      return acc;
+    }, {});
+
+    const sortedDataPoints = Object.entries(dataByFechaReserva)
+      .map(([fecha, valorReserva]) => ({ x: new Date(fecha), y: valorReserva }))
+      .sort((a, b) => a.x.getTime() - b.x.getTime());
+
+    this.amountInReserve = {
+      animationEnabled: true,
+      axisX: {
+        title: null,
+        labelFormatter: function () {
+          return " "; // Establece las etiquetas del eje X en blanco para ocultarlas
+        },
+        gridThickness: 0, // Establece el grosor de la cuadrícula del eje X en 0 para ocultarla
+        lineColor: "white", // Oculta la línea del eje X estableciéndola en blanco
+        tickLength: 0, // Establece la longitud de los ticks del eje X en 0 para ocultarlos
+        tickColor: "white", // Establece el color de los ticks del eje X en blanco para ocultarlos
+      },
+      axisY: {
+        title: null,
+        labelFormatter: function () {
+          return " "; // Establece las etiquetas del eje Y en blanco para ocultarlas
+        },
+        suffix: "",
+        stripLines: [],
+        gridThickness: 0, // Establece el grosor de la cuadrícula del eje Y en 0 para ocultarla
+        lineColor: "white", // Oculta la línea del eje Y estableciéndola en blanco
+        tickLength: 0, // Establece la longitud de los ticks del eje Y en 0 para ocultarlos
+        tickColor: "white", // Establece el color de los ticks del eje Y en blanco para ocultarlos
+      },
+      data: [{
+        type: "spline",
+        xValueFormatString: "DD/MM/YYYY",
+        yValueFormatString: "#,###.##'$'",
+        dataPoints: sortedDataPoints
+      }]
+    };
+
+    if (this.amountInReserveChart) {
+      this.amountInReserveChart.options = this.amountInReserve;
+      this.amountInReserveChart.render();
+    }
+  }
+
+
+  getChartInstanceForTotalCases(chartInstance: any): void {
+    this.totalCasesChart = chartInstance;
+    this.prepareDataForTotalCases(); // Llamar a esto después de obtener la instancia
+  }
+
+
+  prepareDataForTotalCases(): void {
+    // Acumular casos por 'Fecha de Aviso'
+    const dataByFechaAviso = this.jsonData.reduce((acc, item) => {
+      const fechaParts = item['Fecha de Aviso'].split("/");
+      if (fechaParts.length === 3) {
+        // Convertir DD/MM/YYYY a MM/DD/YYYY para crear el objeto Date correctamente
+        const fecha = new Date(`${fechaParts[1]}/${fechaParts[0]}/${fechaParts[2]}`);
+        const fechaKey = fecha.toISOString().split('T')[0]; // Convertir a formato YYYY-MM-DD para agrupar
+        acc[fechaKey] = (acc[fechaKey] || 0) + 1; // Sumar 1 por cada caso
+      }
+      return acc;
+    }, {});
+    // Ordenar los datos por fecha
+    const sortedDataPoints = Object.entries(dataByFechaAviso)
+      .map(([fecha, count]) => ({ x: new Date(fecha), y: count }))
+      .sort((a, b) => a.x.getTime() - b.x.getTime());
+
+    this.totalCases = {
+      animationEnabled: true,
+      axisX: {
+        title: null,
+        labelFormatter: function () {
+          return " "; // Establece las etiquetas del eje X en blanco para ocultarlas
+        },
+        gridThickness: 0, // Establece el grosor de la cuadrícula del eje X en 0 para ocultarla
+        lineColor: "white", // Oculta la línea del eje X estableciéndola en blanco
+        tickLength: 0, // Establece la longitud de los ticks del eje X en 0 para ocultarlos
+        tickColor: "white", // Establece el color de los ticks del eje X en blanco para ocultarlos
+      },
+      axisY: {
+        title: null,
+        labelFormatter: function () {
+          return " "; // Establece las etiquetas del eje Y en blanco para ocultarlas
+        },
+        suffix: "",
+        stripLines: [],
+        gridThickness: 0, // Establece el grosor de la cuadrícula del eje Y en 0 para ocultarla
+        lineColor: "white", // Oculta la línea del eje Y estableciéndola en blanco
+        tickLength: 0, // Establece la longitud de los ticks del eje Y en 0 para ocultarlos
+        tickColor: "white", // Establece el color de los ticks del eje Y en blanco para ocultarlos
+      },
+      data: [{
+        type: "spline",
+        xValueFormatString: "DD/MM/YYYY",
+        dataPoints: sortedDataPoints
+      }]
+    };
+    // Calcular el número total de casos
+    this.totalCasesNumber = this.jsonData.length;
+    if (this.totalCasesChart) {
+      this.totalCasesChart.options = this.totalCases;
+      this.totalCasesChart.render();
+    }
+  }
+
+  goHome(){
+    this.router.navigate(["example_poc"]);
+  }
+
+  goLiquidates(){
+    this.router.navigate(["state_cases"]);
+  }
+
+  goEjecutivos(){
+    this.router.navigate(["ejecutivos_cases"]);
   }
 
 }

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { PaymentData } from './payment_data.interface';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-example-poc',
@@ -57,7 +58,7 @@ export class ExamplePocComponent implements OnInit {
   drilldownLevel: number = 0;
   showDrilldown: boolean = false;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
 
   }
 
@@ -814,6 +815,18 @@ export class ExamplePocComponent implements OnInit {
       this.totalCasesByPeriodChart.options = this.totalCasesByPeriod;
       this.totalCasesByPeriodChart.render();
     }
+  }
+
+  goHome(){
+    this.router.navigate(["example_poc"]);
+  }
+
+  goLiquidates(){
+    this.router.navigate(["state_cases"]);
+  }
+
+  goEjecutivos(){
+    this.router.navigate(["ejecutivos_cases"]);
   }
 
 }

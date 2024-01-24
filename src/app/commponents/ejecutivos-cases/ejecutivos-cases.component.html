@@ -77,11 +77,44 @@
 <div class="container p-1">
     <div class="grid grid-cols-6">
         <div class="grid grid-rows-1 grid-flow-col gap-4 col-span-1 mr-3 row-span-3">
-            <div class="max-w-sm rounded-lg overflow-hidden shadow-lg p-2">
-
-            </div>
+            <div class="grid grid-rows-1 grid-flow-col gap-4 col-span-1 mr-3 row-span-3">
+                <!-- ALINEAR VERTICALMENTE Y HORIZONTALMETNE CENTRADO -->
+                <div class="max-w-sm rounded-lg overflow-hidden shadow-lg p-2 grid grid-rows-12 items-center justify-center">
+                   <!-- Botón para "Casos" -->
+                   <button
+                   (click)="goHome()"
+                       class="flex items-center justify-center rounded-full border border-blue-500 
+                           p-2 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors rounded-lg w-36">
+                           Casos
+                   </button>
+   
+                   <!-- Botón para "Liquidados" -->
+                   <button
+                   (click)="goLiquidates()"
+                       class="flex items-center justify-center rounded-full border border-green-500 p-2 text-blue-500 w-36 
+                           hover:bg-blue-500 hover:text-white transition-colors rounded-lg">
+                           Liquidados
+                   </button>
+   
+                   <!-- Botón para "Ejecutivos" -->
+                   <button
+                   (click)="goEjecutivos()"
+                       class="flex items-center justify-center rounded-full border border-orange-500 p-2 w-36 
+                           text-blue-500 hover:bg-blue-500 hover:text-white transition-colors rounded-lg">
+                       Ejecutivos
+                   </button>
+               </div>
+           </div>
         </div>
         <div class="grid grid-rows-1 grid-flow-col gap-4 col-span-5 mb-3">
+
+            <div class="max-w-sm rounded-lg overflow-hidden shadow-lg p-2">
+                <div class="text-sm text-center">Número de casos</div>
+                <div class="text-2xl text-center font-bold">{{totalCasesNumber}}</div>
+                <canvasjs-chart [options]="totalCases" [styles]="{height:'60px'}"
+                    (chartInstance)="getChartInstanceForTotalCases($event)"></canvasjs-chart>
+            </div>
+
             <div class="max-w-sm rounded-lg overflow-hidden shadow-lg p-2">
                 <div class="text-sm text-center">Total en pagos</div>
                 <div class="text-2xl text-center font-bold">${{totalPaymentNumber | number}}</div>
@@ -94,12 +127,20 @@
                 <canvasjs-chart [options]="liquidatedCases" [styles]="{ height:'60px'}"
                     (chartInstance)="getChartInstanceForLiquidatedCases($event)"></canvasjs-chart>
             </div>
+
+            <div class="max-w-sm rounded-lg overflow-hidden shadow-lg p-2">
+                <div class="text-sm text-center">Valor en reserva</div>
+                <div class="text-2xl text-center font-bold">${{amountInReserveNumber | number}}</div>
+                <canvasjs-chart [options]="amountInReserve" [styles]="{ height:'60px'}"
+                    (chartInstance)="getChartInstanceForAmountInReserve($event)"></canvasjs-chart>
+            </div>
+
         </div>
         <div class="grid grid-rows-2 grid-flow-col gap-2 col-span-5">
             <div class="rounded-lg overflow-hidden shadow-lg">
                 <canvasjs-chart 
                     [options]="chartOptions" 
-                    [styles]="{width: '100%', height:'360px'}"
+                    [styles]="{width: '100%', height:'240px', padding: '1px'}"
                     (chartInstance)="getChartInstance($event)">
                 </canvasjs-chart> 
             </div>
@@ -107,7 +148,7 @@
             <div class="rounded-lg overflow-hidden shadow-lg">
                 <canvasjs-chart 
                     [options]="chartOptions5" 
-                    [styles]="{width: '100%', height:'360px'}"
+                    [styles]="{width: '100%', height:'240px'}"
                     (chartInstance)="getChartInstance5($event)">
                 </canvasjs-chart> 
 
@@ -116,7 +157,7 @@
             <div class="rounded-lg overflow-hidden shadow-lg">
                 <canvasjs-chart 
                 [options]="chartOptions4" 
-                [styles]="{width: '100%', height:'360px'}"
+                [styles]="{width: '100%', height:'240px'}"
                 (chartInstance)="getChart4Instance($event)">
             </canvasjs-chart>
             </div>
@@ -127,7 +168,7 @@
 
                 <canvasjs-chart 
                     [options]="chartOptions6" 
-                    [styles]="{width: '100%', height:'360px'}"
+                    [styles]="{width: '100%', height:'240px'}"
                     (chartInstance)="getChartInstance6($event)">
                 </canvasjs-chart> 
                 
