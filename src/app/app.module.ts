@@ -97,6 +97,9 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ExamplePocComponent } from './commponents/example-poc/example-poc.component';
 import { FormsModule } from '@angular/forms';
+import { EjecutivosCasesComponent } from './commponents/ejecutivos-cases/ejecutivos-cases.component';
+import { CardComponent } from './shared/card/card.component';
+import { StateCasesComponent } from './commponents/state-cases/state-cases.component';
 
 
 @NgModule({
@@ -189,7 +192,10 @@ import { FormsModule } from '@angular/forms';
 
     NotFoundComponent,
 
-    ExamplePocComponent
+    ExamplePocComponent,
+      EjecutivosCasesComponent,
+      CardComponent,
+      StateCasesComponent
 
 
   ],
