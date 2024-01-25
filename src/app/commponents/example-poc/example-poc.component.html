@@ -1,111 +1,115 @@
-<header class="bg-dark">
-    <nav class="mx-auto flex max-w-7xl items-center justify-between p-2 lg:px-8" aria-label="Global">
-        <div class="flex lg:flex-1">
-            <h2 class="text-white">
-                POC SDP
-            </h2>
-        </div>
-        <div class="relative mr-3">
-            <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg 
-                    text-sm px-3 py-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" (click)="toggleDropdown()">Periodo<svg
-                    class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 10 6">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="m1 1 4 4 4-4" />
-                </svg>
-            </button>
-
-            <!-- Dropdown menu -->
-            <div id="dropdownHover" *ngIf="isDropdownOpen"
-                class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <div class="py-1" role="none">
-                    <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                        id="menu-item-0">2024</a>
-                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                        id="menu-item-1">2023</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="relative mr-3">
-            <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium 
-                    rounded-lg text-sm px-3 py-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" (click)="toggleDropdown2()">Mes<svg
-                    class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 10 6">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="m1 1 4 4 4-4" />
-                </svg>
-            </button>
-
-            <!-- Dropdown menu -->
-            <div id="dropdownHover" *ngIf="isDropdownOpen2"
-                class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <div class="py-1" role="none">
-                    <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                        id="menu-item-0">Enero</a>
-                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                        id="menu-item-1">Febrero</a>
-                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                        id="menu-item-2">Marzo</a>
-                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                        id="menu-item-3">Abril</a>
-                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                        id="menu-item-4">Mayo</a>
-                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                        id="menu-item-5">Junio</a>
-                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                        id="menu-item-6">Julio</a>
-                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                        id="menu-item-7">Agosto</a>
-                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                        id="menu-item-8">Septiembre</a>
-                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                        id="menu-item-9">Octubre</a>
-                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                        id="menu-item-10">Noviembre</a>
-                    <a class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                        id="menu-item-11">Diciembre</a>
-                </div>
-            </div>
-        </div>
-    </nav>
-</header>
-<div class="container p-1">
+<div class="container p-3 max-w-sm rounded-lg overflow-hidden shadow-lg ">
     <div class="grid grid-cols-6">
-        <div class="grid grid-rows-1 grid-flow-col gap-4 col-span-1 mr-3 row-span-3">
-             <!-- ALINEAR VERTICALMENTE Y HORIZONTALMETNE CENTRADO -->
-             <div class="max-w-sm rounded-lg overflow-hidden shadow-lg p-2 grid grid-rows-12 items-center justify-center">
-                <!-- Botón para "Casos" -->
-                <button
-                (click)="goHome()"
-                    class="flex items-center justify-center rounded-full border border-blue-500 
-                        p-2 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors rounded-lg w-36">
+        <div class="grid grid-rows-1 grid-flow-col gap-4 col-span-6 mb-3">
+            <nav class=" flex max-w-7xl items-center justify-between p-2 lg:px-8" aria-label="Global">
+                <div class="flex lg:flex-1">
+                    <div data-te-chip-init data-te-ripple-init
+                        class="[word-wrap: break-word] my-[5px] mr-4 flex h-[32px] cursor-pointer items-center justify-between rounded-[16px] bg-[#eceff1] px-[12px] py-0 text-[13px] font-normal normal-case leading-loose text-[#4f4f4f] shadow-none transition-[opacity] duration-300 ease-linear hover:!shadow-none active:bg-[#cacfd1] dark:bg-neutral-400 dark:text-neutral-200"
+                        data-te-close="true">
                         Casos
-                </button>
-
-                <!-- Botón para "Liquidados" -->
-                <button
-                (click)="goLiquidates()"
-                    class="flex items-center justify-center rounded-full border border-green-500 p-2 text-blue-500 w-36 
-                        hover:bg-blue-500 hover:text-white transition-colors rounded-lg">
+                    </div>
+                    <div data-te-chip-init data-te-ripple-init
+                        class="[word-wrap: break-word] my-[5px] mr-4 flex h-[32px] cursor-pointer items-center justify-between rounded-[16px] bg-[#eceff1] px-[12px] py-0 text-[13px] font-normal normal-case leading-loose text-[#4f4f4f] shadow-none transition-[opacity] duration-300 ease-linear hover:!shadow-none active:bg-[#cacfd1] dark:bg-neutral-400 dark:text-neutral-200"
+                        data-te-close="true">
                         Liquidados
-                </button>
+                    </div>
+                    <div data-te-chip-init data-te-ripple-init
+                        class="[word-wrap: break-word] my-[5px] mr-4 flex h-[32px] cursor-pointer items-center justify-between rounded-[16px] bg-[#eceff1] px-[12px] py-0 text-[13px] font-normal normal-case leading-loose text-[#4f4f4f] shadow-none transition-[opacity] duration-300 ease-linear hover:!shadow-none active:bg-[#cacfd1] dark:bg-neutral-400 dark:text-neutral-200"
+                        data-te-close="true">
+                        Ejecutivos
+                    </div>
+                </div>
+                <div class="relative mr-3">
+                    <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-xl 
+                            text-sm px-3 py-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        type="button" (click)="toggleDropdown()">Periodo<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 4 4 4-4" />
+                        </svg>
+                    </button>
 
-                <!-- Botón para "Ejecutivos" -->
-                <button
-                (click)="goEjecutivos()"
-                    class="flex items-center justify-center rounded-full border border-orange-500 p-2 w-36 
-                        text-blue-500 hover:bg-blue-500 hover:text-white transition-colors rounded-lg">
-                    Ejecutivos
-                </button>
-            </div>
+                    <!-- Dropdown menu -->
+                    <div id="dropdownDefaultCheckbox" *ngIf="isDropdownOpen"
+                        class="z-10 w-48 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 absolute">
+                        <ul class="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200"
+                            aria-labelledby="dropdownCheckboxButton">
+                            <li>
+                                <div class="flex items-center">
+                                    <input id="checkbox-item-1" type="checkbox" value=""
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                    <label for="checkbox-item-1"
+                                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">2023</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="flex items-center">
+                                    <input id="checkbox-item-1" type="checkbox" value=""
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                    <label for="checkbox-item-1"
+                                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">2024</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="relative mr-3">
+                    <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium 
+                            rounded-xl text-sm px-3 py-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        type="button" (click)="toggleDropdown2()">Mes<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 4 4 4-4" />
+                        </svg>
+                    </button>
+
+                    <!-- Dropdown menu -->
+                    <div id="dropdownDefaultCheckbox" *ngIf="isDropdownOpen2"
+                        class="z-10 w-48 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 absolute">
+                        <ul class="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200"
+                            aria-labelledby="dropdownCheckboxButton">
+                            <li>
+                                <div class="flex items-center">
+                                    <input id="checkbox-item-1" type="checkbox" value=""
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                    <label for="checkbox-item-1"
+                                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Enero</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="flex items-center">
+                                    <input id="checkbox-item-1" type="checkbox" value=""
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                    <label for="checkbox-item-1"
+                                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Febrero</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="flex items-center">
+                                    <input id="checkbox-item-1" type="checkbox" value=""
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                    <label for="checkbox-item-1"
+                                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Marzo</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="flex items-center">
+                                    <input id="checkbox-item-1" type="checkbox" value=""
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                                    <label for="checkbox-item-1"
+                                        class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Abril</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </nav>
         </div>
-
-        <div class="grid grid-rows-1 grid-flow-col gap-4 col-span-5 mb-3">
+        <div class="grid grid-rows-1 grid-flow-col gap-4 col-span-6 mb-3">
             <div class="max-w-sm rounded-lg overflow-hidden shadow-lg p-2">
                 <div class="text-sm text-center">Número de casos</div>
                 <div class="text-2xl text-center font-bold">{{totalCasesNumber}}</div>
@@ -131,15 +135,15 @@
                     (chartInstance)="getChartInstanceForAmountInReserve($event)"></canvasjs-chart>
             </div>
         </div>
-        <div class="grid grid-rows-2 grid-flow-col gap-2 col-span-5">
-            <div class="rounded-lg overflow-hidden shadow-lg">
-
+        <div class="relative grid grid-rows-2 grid-flow-col gap-2 col-span-6">
+            <div class="relative rounded-lg overflow-hidden shadow-lg">
                 <canvasjs-chart [options]="chartOptions1" [styles]="{width: '100%', height:'240px', padding: '1px'}"
                     (chartInstance)="getChart1Instance($event)"></canvasjs-chart>
             </div>
-            <div class="rounded-lg overflow-hidden shadow-lg">
+            <div class="relative rounded-lg overflow-hidden shadow-lg">
                 <canvasjs-chart [options]="chartOptions3" [styles]="{width: '100%', height:'240px'}"
                     (chartInstance)="getChart3Instance($event)"></canvasjs-chart>
+
             </div>
             <div class="relative rounded-lg overflow-hidden shadow-lg">
                 <canvasjs-chart [options]="chartOptions2" [styles]="{width: '100%', height:'240px'}"
@@ -155,5 +159,4 @@
             </div>
         </div>
     </div>
-
 </div>

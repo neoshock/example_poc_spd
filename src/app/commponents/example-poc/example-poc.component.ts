@@ -414,7 +414,7 @@ export class ExamplePocComponent implements OnInit {
         return { label: ramo, y: dataByEstadoAndRamo[estado][ramo] };
       });
 
-      return { type: "stackedColumn", name: estado, showInLegend: false, dataPoints };
+      return { type: "stackedColumn", name: estado, showInLegend: true, dataPoints };
     });
 
     let maxValue = 0;
@@ -445,6 +445,10 @@ export class ExamplePocComponent implements OnInit {
         labelFormatter: function () {
           return ""; // Esto ocultará las etiquetas del eje X
         }
+      },
+      legend: {
+        verticalAlign: "center", // Alinea la leyenda verticalmente en el centro
+        horizontalAlign: "right" // Alinea la leyenda horizontalmente a la derecha
       },
       toolTip: {
         shared: true,
