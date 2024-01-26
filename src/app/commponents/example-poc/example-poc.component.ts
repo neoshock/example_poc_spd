@@ -58,8 +58,15 @@ export class ExamplePocComponent implements OnInit {
   drilldownLevel: number = 0;
   showDrilldown: boolean = false;
 
+  /// modals
+  showModal: boolean = false;
+
   constructor(private http: HttpClient, private router: Router) {
 
+  }
+
+  toggleModal(): void {
+    this.showModal = !this.showModal;
   }
 
   prepareDrilldownData(): void {

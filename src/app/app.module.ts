@@ -100,6 +100,7 @@ import { FormsModule } from '@angular/forms';
 import { EjecutivosCasesComponent } from './commponents/ejecutivos-cases/ejecutivos-cases.component';
 import { CardComponent } from './shared/card/card.component';
 import { StateCasesComponent } from './commponents/state-cases/state-cases.component';
+import { ModalsComponent } from './components/modals/modals.component';
 
 
 @NgModule({
@@ -195,7 +196,8 @@ import { StateCasesComponent } from './commponents/state-cases/state-cases.compo
     ExamplePocComponent,
       EjecutivosCasesComponent,
       CardComponent,
-      StateCasesComponent
+      StateCasesComponent,
+      ModalsComponent
 
 
   ],

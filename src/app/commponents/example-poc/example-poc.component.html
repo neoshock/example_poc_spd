@@ -1,4 +1,6 @@
 <div class="container p-3 max-w-sm rounded-lg overflow-hidden shadow-lg ">
+    <app-modals [showModal]="showModal" (chartInstanceEvent)="getChart1Instance($event)" [chartOptions]="chartOptions1">
+    </app-modals>
     <div class="grid grid-cols-6">
         <div class="grid grid-rows-1 grid-flow-col gap-4 col-span-6 mb-3">
             <nav class=" flex max-w-7xl items-center justify-between p-2 lg:px-8" aria-label="Global">
@@ -115,6 +117,7 @@
                 <div class="text-2xl text-center font-bold">{{totalCasesNumber}}</div>
                 <canvasjs-chart [options]="totalCases" [styles]="{height:'60px'}"
                     (chartInstance)="getChartInstanceForTotalCases($event)"></canvasjs-chart>
+
             </div>
             <div class="max-w-sm rounded-lg overflow-hidden shadow-lg p-2">
                 <div class="text-sm text-center">Total en pagos</div>
@@ -139,6 +142,15 @@
             <div class="relative rounded-lg overflow-hidden shadow-lg">
                 <canvasjs-chart [options]="chartOptions1" [styles]="{width: '100%', height:'240px', padding: '1px'}"
                     (chartInstance)="getChart1Instance($event)"></canvasjs-chart>
+                <button class="absolute top-2 right-2 bg-blue-500 hover:bg-blue-700 
+                    text-white font-bold py-1 px-2 rounded" data-te-toggle="modal"
+                    data-te-target="#exampleModalWithIcon" data-te-ripple-init (click)="toggleModal()">
+                    <svg class="w-5 h-5 text-gray-800 dark:text-white" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M16 4h4m0 0v4m0-4-5 5M8 20H4m0 0v-4m0 4 5-5" />
+                    </svg>
+                </button>
             </div>
             <div class="relative rounded-lg overflow-hidden shadow-lg">
                 <canvasjs-chart [options]="chartOptions3" [styles]="{width: '100%', height:'240px'}"
